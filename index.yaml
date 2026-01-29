@@ -3,6 +3,16 @@ entries:
   traefik:
   - apiVersion: v2
     appVersion: 1.16.1
+    created: "2026-01-29T11:05:15.66988177Z"
+    description: A Helm chart for Kubernetes
+    digest: 11b1ecb87dae08d26c324d0c1b5e630467dfff7392e23156c806e0b3c16def2f
+    name: traefik
+    type: application
+    urls:
+    - https://github.com/kad-bloemgx/ubuntu-server-k3s-dev/releases/download/traefik-1.0.13/traefik-1.0.13.tgz
+    version: 1.0.13
+  - apiVersion: v2
+    appVersion: 1.16.1
     created: "2026-01-29T10:55:45.094302736Z"
     description: A Helm chart for Kubernetes
     digest: b77f542484d9c5adf37007bfbe9fd1aa53243748d9307db7e9685f0909e42c73
@@ -31,4 +41,4 @@ entries:
     urls:
     - https://github.com/kad-bloemgx/ubuntu-server-k3s-dev/releases/download/traefik-1.0.10/traefik-1.0.10.tgz
     version: 1.0.10
-generated: "2026-01-29T10:55:45.094320078Z"
+generated: "2026-01-29T11:05:15.669906196Z"
