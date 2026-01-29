@@ -1,0 +1,12 @@
+replicaCount: 1
+
+appName: traefik
+nameSpace: default
+
+image:
+  repository: traefik
+  tag: v3.2.0
+
+serviceaccount:
+  ingeress:
+    controller: traefik_ingress_controller

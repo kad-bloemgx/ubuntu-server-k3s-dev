@@ -1,0 +1,43 @@
+kind: Deployment
+apiVersion: apps/v1
+
+
+metadata:
+  namespace: {{ .Values.nameSpace }}
+  name: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+    spec:
+      serviceAccountName: {{ .Values.serviceaccount.ingeress.controller }}
+      containers:
+        - name: {{ .Values.appName }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          args:
+            - --api.insecure
+            - --log.level=DEBUG
+            - --accesslog
+            - --entryPoints.web.Address=:8000
+            - --entryPoints.websecure.Address=:4443
+            - --providers.kubernetescrd
+            - --certificatesresolvers.myresolver.acme.tlschallenge=true
+            - --certificatesresolvers.myresolver.acme.email=gerard.bloemendaal@gmail.com
+            - --certificatesresolvers.myresolver.acme.storage=acme.json
+            - --certificatesresolvers.myresolver.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
+            - --serversTransport.insecureSkipVerify=true
+          ports:
+            - name: web
+              containerPort: 8000
+            - name: websecure
+              containerPort: 4443
+            - name: admin
+              containerPort: 8080
