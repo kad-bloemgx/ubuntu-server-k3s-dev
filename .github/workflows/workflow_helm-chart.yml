@@ -2,7 +2,7 @@ name: workflow_helm-chart.yml
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   release:
     permissions:
