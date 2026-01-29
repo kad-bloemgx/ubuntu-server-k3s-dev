@@ -9,4 +9,4 @@ image:
 
 serviceaccount:
   ingeress:
-    controller: traefik_ingress_controller
+    controller: traefik-ingress-controller
