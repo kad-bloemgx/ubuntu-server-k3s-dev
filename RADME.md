@@ -4,6 +4,6 @@
 
 - helm repo list
 - helm repo add ubuntu-server-k3s-dev https://kad-bloemgx.github.io/ubuntu-server-k3s-dev
-- helm search repo raspberry_home-assistant
+- helm search repo ubuntu-server-k3s-dev
 - helm repo update
-- helm install home-assistant raspberry_home-assistant/raspberry_home-assistant
+- helm install traefik ubuntu-server-k3s-dev/traefik
