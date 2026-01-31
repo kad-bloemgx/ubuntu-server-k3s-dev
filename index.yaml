@@ -53,6 +53,18 @@ entries:
     version: 0.1.0
   nextcloud:
   - apiVersion: v2
+    created: "2026-01-31T19:49:02.340792803Z"
+    dependencies:
+    - name: nextcloud
+      repository: https://nextcloud.github.io/helm/
+      version: '8.9.0 '
+    description: A Helm chart for Kubernetes
+    digest: c4cb19bc71e426f7cee4acbac752d6b7bb22fde43dd63421ab0561d53347fbaa
+    name: nextcloud
+    urls:
+    - https://github.com/kad-bloemgx/ubuntu-server-k3s-dev/releases/download/nextcloud-0.1.9/nextcloud-0.1.9.tgz
+    version: 0.1.9
+  - apiVersion: v2
     created: "2026-01-31T19:44:23.286001615Z"
     dependencies:
     - import-values:
@@ -279,4 +291,4 @@ entries:
     urls:
     - https://github.com/kad-bloemgx/ubuntu-server-k3s-dev/releases/download/traefik-1.0.10/traefik-1.0.10.tgz
     version: 1.0.10
-generated: "2026-01-31T19:44:23.28605297Z"
+generated: "2026-01-31T19:49:02.340866302Z"
