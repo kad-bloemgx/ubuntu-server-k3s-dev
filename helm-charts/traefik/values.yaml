@@ -1,7 +1,7 @@
 replicaCount: 1
 
 appName: traefik
-nameSpace: ingress
+nameSpace: default
 
 image:
   repository: traefik
