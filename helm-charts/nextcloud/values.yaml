@@ -1,5 +1,5 @@
 global:
-  Nextcloud:
+  nextcloud:
     trustedDomains:
       - nextcloud.example.com
       - localhost
