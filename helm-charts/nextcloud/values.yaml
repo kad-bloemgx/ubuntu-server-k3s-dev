@@ -1,6 +1,0 @@
-global:
-replicaCount: 2
-
-my-imports:
-  nextcloud:
-    containerPort: 92
