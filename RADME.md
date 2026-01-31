@@ -11,11 +11,12 @@
 - 
 ## Specifiek voor Traefik
 
-### Traefik Custom Resources (CRD)
+### Traefik Custom Resources (CRD) voor versie 6.6.7
+
 ```bash
 kubectl config use-context k3s-bunker-02
-kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v3.2/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml
-kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v3.2/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v3.6.7/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v3.6.7/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml
 ```
 
 
