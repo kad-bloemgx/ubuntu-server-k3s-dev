@@ -381,7 +381,7 @@ nginx:
     tag: alpine
     pullPolicy: IfNotPresent
 
-  containerPort: 80
+  containerPort: 92
   # This configures nginx to listen on either IPv4, IPv6 or both
   ipFamilies:
     - IPv4
