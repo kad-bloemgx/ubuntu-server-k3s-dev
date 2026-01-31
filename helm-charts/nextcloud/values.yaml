@@ -1,6 +1,4 @@
-global:
   nextcloud:
+    containerPort: 81
     trustedDomains:
-      - nextcloud.example.com
-      - localhost
       - ubuntu-server-k3s-dev
