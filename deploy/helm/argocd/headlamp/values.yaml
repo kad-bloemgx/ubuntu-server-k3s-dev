@@ -1,8 +1,8 @@
 headlamp:
   fullnameOverride: headlamp
 
-  # Users authenticate with their own Kubernetes credentials. Do not give the
-  # dashboard pod's service account cluster-admin access.
+  # The chart's built-in binding defaults to cluster-admin; use the explicit
+  # read-only ClusterRole and binding rendered by this wrapper instead.
   clusterRoleBinding:
     create: false
 
@@ -16,3 +16,7 @@ headlamp:
 
 ingress:
   host: headlamp.gerardbloemendaal.freemyip.com
+
+rbac:
+  create: true
+  serviceAccountName: headlamp-user

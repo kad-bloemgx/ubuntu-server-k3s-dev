@@ -1,0 +1,320 @@
+{{- if .Values.rbac.create }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.rbac.serviceAccountName }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: headlamp
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+automountServiceAccountToken: false
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: headlamp-cluster-reader
+  labels:
+    app.kubernetes.io/name: headlamp
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - componentstatuses
+      - configmaps
+      - endpoints
+      - events
+      - limitranges
+      - namespaces
+      - nodes
+      - persistentvolumeclaims
+      - persistentvolumes
+      - pods
+      - podtemplates
+      - replicationcontrollers
+      - resourcequotas
+      - secrets
+      - serviceaccounts
+      - services
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - pods/log
+    verbs:
+      - get
+  - apiGroups:
+      - admissionregistration.k8s.io
+    resources:
+      - mutatingadmissionpolicies
+      - mutatingadmissionpolicybindings
+      - mutatingwebhookconfigurations
+      - validatingadmissionpolicies
+      - validatingadmissionpolicybindings
+      - validatingwebhookconfigurations
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - apiextensions.k8s.io
+    resources:
+      - customresourcedefinitions
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - apiregistration.k8s.io
+    resources:
+      - apiservices
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - controllerrevisions
+      - daemonsets
+      - deployments
+      - replicasets
+      - statefulsets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - argoproj.io
+    resources:
+      - applications
+      - applicationsets
+      - appprojects
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - autoscaling
+    resources:
+      - horizontalpodautoscalers
+    verbs:
+      - get
+      - list
+      - watcheyJhbGciOiJSUzI1NiIsImtpZCI6InduaWs3UV8zVk15djdOZDVIand1X1ctRmp3eURnVTc5em1kTnZBaWt1X2MifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiLCJrM3MiXSwiZXhwIjoxNzkxODEyNzU2LCJpYXQiOjE3OTE4MDkxNTYsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwianRpIjoiZGNhMDVhZTItNThlMS00ZGE3LTlkYWMtZmFkYTZmYTdhZTQ2Iiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJoZWFkbGFtcCIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJoZWFkbGFtcCIsInVpZCI6IjdmYmEzNDcxLWM1YWQtNGFkNi1iMmFlLWNiNjg2NzIyNTExNyJ9fSwibmJmIjoxNzkxODA5MTU2LCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6aGVhZGxhbXA6aGVhZGxhbXAifQ.GLvgmm_p7sBeR0AjLvDUFed_0JE5F8lMbhxO3WBEt8xGOUElNeiGVXzVw7luhuCczxCDZBzBP6MaNpYV4nAc4MuJQD5O_QZHt84gQ7-Eot47MbRpWaku7onVFKDi8e2lxDhrOoEzZ2U3lxVJt5C9du5ny5DVq9-n3fW_KECa9qWmL3_OwHGaegB3YlxOKgsjK9GWF2RrU4jqf1h_DRvX82jNxeN2eRSxkjgbxV4GIDPs9CBAF2UHVivjjol6-sCjlb7DIEbjbjvAFt-Bsp_Y86WVS7fd58L6h2rJGo2f7ehhrJpkakDdskvnb4jfU3osEZwVxGbULXk3rMPAtbRqxg
+  - apiGroups:
+      - batch
+    resources:
+      - cronjobs
+      - jobs
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - certificates.k8s.io
+    resources:
+      - certificatesigningrequests
+      - clustertrustbundles
+      - podcertificaterequests
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - coordination.k8s.io
+    resources:
+      - leases
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - discovery.k8s.io
+    resources:
+      - endpointslices
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - events.k8s.io
+    resources:
+      - events
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - flowcontrol.apiserver.k8s.io
+    resources:
+      - flowschemas
+      - prioritylevelconfigurations
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - gateway.networking.k8s.io
+    resources:
+      - backendtlspolicies
+      - gatewayclasses
+      - gateways
+      - grpcroutes
+      - httproutes
+      - listenersets
+      - referencegrants
+      - tcproutes
+      - tlsroutes
+      - udproutes
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - helm.cattle.io
+    resources:
+      - helmchartconfigs
+      - helmcharts
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - k3s.cattle.io
+    resources:
+      - addons
+      - etcdsnapshotfiles
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - metrics.k8s.io
+    resources:
+      - nodes
+      - pods
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - networking.k8s.io
+    resources:
+      - ingressclasses
+      - ingresses
+      - ipaddresses
+      - networkpolicies
+      - servicecidrs
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - node.k8s.io
+    resources:
+      - runtimeclasses
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - policy
+    resources:
+      - poddisruptionbudgets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - rbac.authorization.k8s.io
+    resources:
+      - clusterrolebindings
+      - clusterroles
+      - rolebindings
+      - roles
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - resource.k8s.io
+    resources:
+      - deviceclasses
+      - devicetaintrules
+      - resourceclaims
+      - resourceclaimtemplates
+      - resourceslices
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - scheduling.k8s.io
+    resources:
+      - priorityclasses
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - storage.k8s.io
+    resources:
+      - csidrivers
+      - csinodes
+      - csistoragecapacities
+      - storageclasses
+      - volumeattachments
+      - volumeattributesclasses
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - storagemigration.k8s.io
+    resources:
+      - storageversionmigrations
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - traefik.io
+    resources:
+      - ingressroutes
+      - ingressroutetcps
+      - ingressrouteudps
+      - middlewares
+      - middlewaretcps
+      - serverstransports
+      - serverstransporttcps
+      - tlsoptions
+      - tlsstores
+      - traefikservices
+    verbs:
+      - get
+      - list
+      - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: headlamp-cluster-reader
+  labels:
+    app.kubernetes.io/name: headlamp
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: headlamp-cluster-reader
+subjects:
+  - kind: ServiceAccount
+    name: {{ .Values.rbac.serviceAccountName }}
+    namespace: {{ .Release.Namespace }}
+{{- end }}
