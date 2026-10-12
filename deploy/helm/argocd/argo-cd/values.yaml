@@ -31,7 +31,6 @@ argo-cd:
                   - key: app.kubernetes.io/name
                     operator: In
                     values:
-                      - argo-cd
                       - storage
                       - metallb
               - matchExpressions:
