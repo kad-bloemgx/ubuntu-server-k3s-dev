@@ -66,7 +66,7 @@ argo-cd:
                       - backup
         generators:
           - git:
-              repoURL: git@github.com:kad-bloemgx/raspberry_home-assistant.git
+              repoURL: https://github.com/kad-bloemgx/ubuntu-server-k3s-dev.git
               revision: HEAD
               directories:
                 - path: deploy/helm/argocd/*
@@ -79,7 +79,7 @@ argo-cd:
           spec:
             project: default
             source:
-              repoURL: git@github.com:kad-bloemgx/ubuntu-server-k3s-dev.git
+              repoURL: https://github.com/kad-bloemgx/ubuntu-server-k3s-dev.git
               targetRevision: HEAD
               path: "{{`{{.path.path}}`}}"
             destination:
