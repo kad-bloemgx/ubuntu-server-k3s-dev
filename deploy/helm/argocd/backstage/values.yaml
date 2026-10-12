@@ -1,0 +1,6 @@
+backstage:
+  backstage:
+    image:
+      tag: latest
+  postgresql:
+    enabled: false

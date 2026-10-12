@@ -49,6 +49,11 @@ argo-cd:
                   - key: app.kubernetes.io/name
                     operator: In
                     values:
+                      - backstage
+              - matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
                       - demo-app
               - matchExpressions:
                   - key: app.kubernetes.io/name
@@ -81,8 +86,6 @@ argo-cd:
               repoURL: https://github.com/kad-bloemgx/ubuntu-server-k3s-dev.git
               targetRevision: HEAD
               path: "{{`{{.path.path}}`}}"
-              helm:
-                releaseName: argocd
             destination:
               server: https://kubernetes.default.svc
               namespace: "{{`{{.path.basename}}`}}"
@@ -93,6 +96,12 @@ argo-cd:
               syncOptions:
                 - CreateNamespace=true
         templatePatch: |
+          {{`{{ if eq .path.basename "argo-cd" }}`}}
+          spec:
+            source:
+              helm:
+                releaseName: argocd
+          {{`{{ end }}`}}
           {{`{{ if eq .path.basename "monitoring" }}`}}
           spec:
             syncPolicy:
