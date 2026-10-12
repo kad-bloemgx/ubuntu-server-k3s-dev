@@ -33,13 +33,6 @@ argo-cd:
                     values:
                       - argo-cd
                       - storage
-                      - metallb
-              - matchExpressions:
-                  - key: app.kubernetes.io/name
-                    operator: In
-                    values:
-                      - traefik
-                      - postgresql
               - matchExpressions:
                   - key: app.kubernetes.io/name
                     operator: In
@@ -56,19 +49,6 @@ argo-cd:
                     operator: In
                     values:
                       - demo-app
-              - matchExpressions:
-                  - key: app.kubernetes.io/name
-                    operator: In
-                    values:
-                      - openvpn
-              # Als laatste, want de backup leest van alle andere apps.
-              # Let op: een app die in geen enkele stap staat wordt wel
-              # aangemaakt maar nooit gesynchroniseerd.
-              - matchExpressions:
-                  - key: app.kubernetes.io/name
-                    operator: In
-                    values:
-                      - backup
         generators:
           - git:
               repoURL: https://github.com/kad-bloemgx/ubuntu-server-k3s-dev.git
