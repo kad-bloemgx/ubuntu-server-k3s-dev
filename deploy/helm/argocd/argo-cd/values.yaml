@@ -33,6 +33,12 @@ argo-cd:
                     values:
                       - argo-cd
                       - storage
+
+              - matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - postgresql
               - matchExpressions:
                   - key: app.kubernetes.io/name
                     operator: In

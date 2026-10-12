@@ -1,0 +1,12 @@
+apiVersion: v2
+name: postgresql-wrapper
+description: Wrapper chart for deploying PostgreSQL
+
+type: application
+version: 0.1.2
+appVersion: "18.6.0"
+
+dependencies:
+  - name: postgresql
+    version: 18.11.6
+    repository: https://charts.bitnami.com/bitnami

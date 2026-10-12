@@ -1,0 +1,37 @@
+postgresql:
+  fullnameOverride: postgresql
+
+  auth:
+    username: appuser
+    database: appdb
+    # Wachtwoorden komen uit een handmatig aangemaakte Secret, niet uit git.
+    existingSecret: postgresql-credentials
+    secretKeys:
+      adminPasswordKey: postgres-password
+      userPasswordKey: password
+
+  primary:
+    # De chart maakt zelf een NetworkPolicy aan. Standaard staat die alle
+    # inkomend verkeer op poort 5432 toe; met allowExternal=false is alleen
+    # verkeer toegestaan dat hieronder expliciet wordt benoemd.
+    networkPolicy:
+      enabled: true
+      allowExternal: false
+      # Egress blijft open: de pod moet o.a. DNS kunnen benaderen.
+      allowExternalEgress: true
+      extraIngress:
+        - ports:
+            - port: 5432
+              protocol: TCP
+          from:
+            - namespaceSelector:
+                matchLabels:
+                  kubernetes.io/metadata.name: pgadmin
+
+    persistence:
+      enabled: true
+      size: 10Gi
+      storageClass: local-path-retain
+      annotations:
+        helm.sh/resource-policy: keep
+        argocd.argoproj.io/sync-options: Delete=false,Prune=false
