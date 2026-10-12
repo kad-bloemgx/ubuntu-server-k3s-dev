@@ -1,0 +1,14 @@
+replicaCount: 1
+
+appName: demo-app
+nameSpace: demo-app
+
+image:
+  repository: nginxdemos/hello
+  tag: "latest"
+
+container:
+  port: 80
+
+service:
+  port: 80

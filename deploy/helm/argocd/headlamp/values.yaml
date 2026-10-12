@@ -1,0 +1,18 @@
+headlamp:
+  fullnameOverride: headlamp
+
+  # Users authenticate with their own Kubernetes credentials. Do not give the
+  # dashboard pod's service account cluster-admin access.
+  clusterRoleBinding:
+    create: false
+
+  config:
+    inCluster: true
+    unsafeUseServiceAccountToken: false
+
+  service:
+    type: ClusterIP
+    port: 80
+
+ingress:
+  host: headlamp.gerardbloemendaal.freemyip.com

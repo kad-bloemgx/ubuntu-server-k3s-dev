@@ -1,0 +1,7 @@
+apiVersion: v2
+name: storage
+description: Cluster storage classes for persistent data that must survive uninstalls
+
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
