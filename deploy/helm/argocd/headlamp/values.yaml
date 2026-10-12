@@ -8,7 +8,9 @@ headlamp:
 
   config:
     inCluster: true
-    unsafeUseServiceAccountToken: false
+    # Use the pod's ServiceAccount token so logging in to the UI works without
+    # manually pasting a token. The bound ClusterRole is read-only.
+    unsafeUseServiceAccountToken: true
 
   service:
     type: ClusterIP
