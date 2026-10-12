@@ -2,5 +2,38 @@ backstage:
   backstage:
     image:
       tag: latest
+
+    # Load the demo image's built-in config first, then layer our overrides on
+    # top. Without this, setting appConfig would replace the command and drop
+    # the baked-in guest auth, base URLs, CORS/CSP and catalog config.
+    args:
+      - "--config"
+      - "/app/app-config.yaml"
+
+    # Layer an extra app-config on top of the demo image's built-in config.
+    # Only the database section is overridden; guest auth and base URLs stay
+    # as provided by the demo image. The POSTGRES_* env vars are injected by
+    # the chart when postgresql.enabled is true.
+    appConfig:
+      backend:
+        database:
+          client: pg
+          connection:
+            host: ${POSTGRES_HOST}
+            port: ${POSTGRES_PORT}
+            user: ${POSTGRES_USER}
+            password: ${POSTGRES_PASSWORD}
+
+  # Bundled Bitnami PostgreSQL subchart, providing persistent storage so the
+  # catalog survives pod restarts. Credentials come from an existing Secret
+  # created out-of-band (NOT in git, since this repo is public).
   postgresql:
-    enabled: false
+    enabled: true
+    auth:
+      username: bn_backstage
+      database: backstage
+      existingSecret: backstage-postgresql
+    primary:
+      persistence:
+        enabled: true
+        size: 8Gi
