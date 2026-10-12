@@ -1,0 +1,20 @@
+{{- if .Values.inFlightReq.enabled }}
+# Begrenst het aantal gelijktijdig lopende verzoeken per client-IP voor deze
+# app. De middleware staat in deze namespace omdat Traefik zonder
+# allowCrossNamespace geen middleware uit een andere namespace mag gebruiken.
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+
+metadata:
+  name: in-flight-req
+  namespace: {{ .Release.Namespace }}
+spec:
+  inFlightReq:
+    amount: {{ .Values.inFlightReq.amount }}
+    # depth 0 laat Traefik het adres van de verbinding gebruiken in plaats van
+    # X-Forwarded-For. Dat klopt alleen doordat de Traefik-service
+    # externalTrafficPolicy Local gebruikt.
+    sourceCriterion:
+      ipStrategy:
+        depth: 0
+{{- end }}

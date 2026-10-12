@@ -1,0 +1,117 @@
+argo-cd:
+  nameOverride: argocd
+  fullnameOverride: argocd
+  namespaceOverride: argo-cd
+
+  global:
+    domain: argocd.local
+
+  configs:
+    params:
+      applicationsetcontroller.enable.progressive.syncs: true
+      server.insecure: true
+
+  extraObjects:
+    - apiVersion: argoproj.io/v1alpha1
+      kind: ApplicationSet
+      metadata:
+        name: ubuntu-server-k3s-dev
+        namespace: argo-cd
+        annotations:
+          argocd.argoproj.io/ignore-healthcheck: "true"
+      spec:
+        goTemplate: true
+        goTemplateOptions:
+          - missingkey=error
+        strategy:
+          type: RollingSync
+          rollingSync:
+            steps:
+              - matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - argo-cd
+                      - storage
+                      - metallb
+              - matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - traefik
+                      - postgresql
+              - matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - headlamp
+                      - pgadmin
+              - matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - demo-app
+              - matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - openvpn
+              # Als laatste, want de backup leest van alle andere apps.
+              # Let op: een app die in geen enkele stap staat wordt wel
+              # aangemaakt maar nooit gesynchroniseerd.
+              - matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - backup
+        generators:
+          - git:
+              repoURL: git@github.com:kad-bloemgx/raspberry_home-assistant.git
+              revision: HEAD
+              directories:
+                - path: deploy/helm/argocd/*
+        template:
+          metadata:
+            name: "{{`{{.path.basename}}`}}"
+            namespace: argo-cd
+            labels:
+              app.kubernetes.io/name: "{{`{{.path.basename}}`}}"
+          spec:
+            project: default
+            source:
+              repoURL: git@github.com:kad-bloemgx/ubuntu-server-k3s-dev.git
+              targetRevision: HEAD
+              path: "{{`{{.path.path}}`}}"
+            destination:
+              server: https://kubernetes.default.svc
+              namespace: "{{`{{.path.basename}}`}}"
+            syncPolicy:
+              automated:
+                prune: true
+                selfHeal: true
+              syncOptions:
+                - CreateNamespace=true
+        templatePatch: |
+          {{`{{ if eq .path.basename "monitoring" }}`}}
+          spec:
+            syncPolicy:
+              syncOptions:
+                - CreateNamespace=true
+                - ServerSideApply=true
+          {{`{{ end }}`}}
+
+  server:
+    ingress:
+      enabled: false
+
+ingress:
+  enabled: true
+  host: argocd.test.gerardbloemendaal.freemyip.com
+
+# Maximaal aantal gelijktijdig lopende verzoeken per client-IP. Beschermt tegen
+# het leegtrekken van verbindingen; rate limiting doet dat niet. Apps die lang
+# openstaande verbindingen gebruiken, zoals Headlamp met zijn watches, hebben
+# deze begrenzing bewust niet.
+inFlightReq:
+  enabled: true
+  amount: 100
