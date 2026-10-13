@@ -21,6 +21,11 @@ backstage:
             # Anonymous access: only use in a restricted demo environment.
             dangerouslyAllowOutsideDevelopment: true
       backend:
+        reading:
+          allow:
+            - host: raw.githubusercontent.com
+              paths:
+                - /kad-bloemgx/ubuntu-server-k3s-dev/main/
         database:
           client: pg
           connection:
@@ -29,6 +34,8 @@ backstage:
             user: ${POSTGRES_USER}
             password: ${POSTGRES_PASSWORD}
       catalog:
+        rules:
+          - allow: [Component, System, Location, User]
         locations:
           - type: url
             target: https://raw.githubusercontent.com/kad-bloemgx/ubuntu-server-k3s-dev/main/catalog-info.yaml

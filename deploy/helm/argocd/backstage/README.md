@@ -42,3 +42,15 @@ include a `backstage.io/source-location` annotation pointing to their source
 directory. Components require `spec.type`, `spec.lifecycle`, and `spec.owner`;
 systems also require `spec.owner`. The catalog location in this chart's
 `values.yaml` allows `System`, `Component`, and `User` entities.
+
+The backend's `reading.allow` permits raw GitHub reads only under
+`/kad-bloemgx/ubuntu-server-k3s-dev/main/`. Global `catalog.rules` also allow
+`Component`, `System`, `Location`, and `User`, so manual registration can ingest
+the owner entity.
+
+After publishing configuration changes to `main`, let Argo CD sync and roll out
+Backstage before refreshing the catalog. The raw GitHub URL is already
+registered through configuration; do not register the same file again using
+the GitHub `blob/main` URL. If that duplicate location was registered manually,
+unregister only that manual location in Backstage, keeping the configured raw
+location, then refresh the configured location to reprocess its entities.
