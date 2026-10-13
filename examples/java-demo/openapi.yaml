@@ -1,0 +1,24 @@
+openapi: 3.0.3
+info:
+  title: Java Demo Greeting API
+  version: 1.0.0
+  description: Local Java demo API; not deployed on the Kubernetes cluster.
+servers:
+  - url: http://127.0.0.1:8080
+paths:
+  /api/greeting:
+    get:
+      operationId: getGreeting
+      summary: Get a demo greeting
+      responses:
+        '200':
+          description: Greeting returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [message]
+                properties:
+                  message:
+                    type: string
+                    example: Hello from Java demo

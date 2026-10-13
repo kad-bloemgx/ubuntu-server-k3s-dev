@@ -31,7 +31,9 @@ it does not provide the backend credentials required by the permission API.
 Backstage loads the catalog from the repository's root `catalog-info.yaml`
 through a public GitHub URL. The catalog contains this repository, the
 `ubuntu-server-platform` system, and components for the Argo CD, Backstage,
-Headlamp, demo-app, and storage charts.
+Headlamp, demo-app, and storage charts. A local-only
+[Java demo](../../../../examples/java-demo/README.md) and its OpenAPI API are
+also included for exploring Catalog Graph.
 Gerard Bloemendaal is registered as a `User` and owns the system and components
 through `spec.owner: user:default/gerard-bloemendaal`. This catalog identity is
 separate from guest authentication; it does not create a login account.
@@ -41,12 +43,12 @@ To add or update an entry, edit `catalog-info.yaml` and commit the change to
 include a `backstage.io/source-location` annotation pointing to their source
 directory. Components require `spec.type`, `spec.lifecycle`, and `spec.owner`;
 systems also require `spec.owner`. The catalog location in this chart's
-`values.yaml` allows `System`, `Component`, and `User` entities.
+`values.yaml` allows `System`, `Component`, `User`, and `API` entities.
 
 The backend's `reading.allow` permits raw GitHub reads only under
 `/kad-bloemgx/ubuntu-server-k3s-dev/main/`. Global `catalog.rules` also allow
-`Component`, `System`, `Location`, and `User`, so manual registration can ingest
-the owner entity.
+`Component`, `System`, `Location`, `User`, and `API`, so manual registration can
+ingest the owner and API entities.
 
 After publishing configuration changes to `main`, let Argo CD sync and roll out
 Backstage before refreshing the catalog. The raw GitHub URL is already

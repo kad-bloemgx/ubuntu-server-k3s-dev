@@ -106,3 +106,35 @@ spec:
   owner: user:default/gerard-bloemendaal
   lifecycle: production
   system: ubuntu-server-platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: java-demo
+  title: Java Demo
+  description: Local Java HTTP greeting service, not deployed on Kubernetes.
+  tags: [java, maven, demo]
+  annotations:
+    github.com/project-slug: kad-bloemgx/ubuntu-server-k3s-dev
+    backstage.io/source-location: url:https://github.com/kad-bloemgx/ubuntu-server-k3s-dev/tree/main/examples/java-demo
+spec:
+  type: service
+  lifecycle: experimental
+  owner: user:default/gerard-bloemendaal
+  system: ubuntu-server-platform
+  providesApis:
+    - api:default/java-demo-api
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: java-demo-api
+  title: Java Demo Greeting API
+  description: OpenAPI contract for the local Java demo greeting endpoint.
+spec:
+  type: openapi
+  lifecycle: experimental
+  owner: user:default/gerard-bloemendaal
+  system: ubuntu-server-platform
+  definition:
+    $text: ./examples/java-demo/openapi.yaml
