@@ -32,8 +32,13 @@ Backstage loads the catalog from the repository's root `catalog-info.yaml`
 through a public GitHub URL. The catalog contains this repository, the
 `ubuntu-server-platform` system, and components for the Argo CD, Backstage,
 Headlamp, demo-app, and storage charts.
+Gerard Bloemendaal is registered as a `User` and owns the system and components
+through `spec.owner: user:default/gerard-bloemendaal`. This catalog identity is
+separate from guest authentication; it does not create a login account.
 
 To add or update an entry, edit `catalog-info.yaml` and commit the change to
 `main`. Components should reference the `ubuntu-server-platform` system and
 include a `backstage.io/source-location` annotation pointing to their source
-directory. The catalog location is configured in this chart's `values.yaml`.
+directory. Components require `spec.type`, `spec.lifecycle`, and `spec.owner`;
+systems also require `spec.owner`. The catalog location in this chart's
+`values.yaml` allows `System`, `Component`, and `User` entities.

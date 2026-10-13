@@ -1,10 +1,21 @@
 apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: gerard-bloemendaal
+  title: Gerard Bloemendaal
+spec:
+  profile:
+    displayName: Gerard Bloemendaal
+  memberOf: []
+---
+apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
   name: ubuntu-server-platform
   title: Ubuntu Server K3s Platform
   description: Self-hosted Kubernetes platform managed with Helm and Argo CD.
-spec: {}
+spec:
+  owner: user:default/gerard-bloemendaal
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Component
@@ -17,6 +28,7 @@ metadata:
     backstage.io/source-location: url:https://github.com/kad-bloemgx/ubuntu-server-k3s-dev/tree/main
 spec:
   type: infrastructure
+  owner: user:default/gerard-bloemendaal
   lifecycle: production
   system: ubuntu-server-platform
 ---
@@ -31,6 +43,7 @@ metadata:
     backstage.io/source-location: url:https://github.com/kad-bloemgx/ubuntu-server-k3s-dev/tree/main/deploy/helm/argocd/argo-cd
 spec:
   type: service
+  owner: user:default/gerard-bloemendaal
   lifecycle: production
   system: ubuntu-server-platform
 ---
@@ -45,6 +58,7 @@ metadata:
     backstage.io/source-location: url:https://github.com/kad-bloemgx/ubuntu-server-k3s-dev/tree/main/deploy/helm/argocd/backstage
 spec:
   type: website
+  owner: user:default/gerard-bloemendaal
   lifecycle: production
   system: ubuntu-server-platform
 ---
@@ -59,6 +73,7 @@ metadata:
     backstage.io/source-location: url:https://github.com/kad-bloemgx/ubuntu-server-k3s-dev/tree/main/deploy/helm/argocd/headlamp
 spec:
   type: website
+  owner: user:default/gerard-bloemendaal
   lifecycle: production
   system: ubuntu-server-platform
 ---
@@ -73,6 +88,7 @@ metadata:
     backstage.io/source-location: url:https://github.com/kad-bloemgx/ubuntu-server-k3s-dev/tree/main/deploy/helm/argocd/demo-app
 spec:
   type: service
+  owner: user:default/gerard-bloemendaal
   lifecycle: experimental
   system: ubuntu-server-platform
 ---
@@ -87,5 +103,6 @@ metadata:
     backstage.io/source-location: url:https://github.com/kad-bloemgx/ubuntu-server-k3s-dev/tree/main/deploy/helm/argocd/storage
 spec:
   type: infrastructure
+  owner: user:default/gerard-bloemendaal
   lifecycle: production
   system: ubuntu-server-platform
