@@ -1,0 +1,91 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: ubuntu-server-platform
+  title: Ubuntu Server K3s Platform
+  description: Self-hosted Kubernetes platform managed with Helm and Argo CD.
+spec: {}
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ubuntu-server-k3s-dev
+  title: Ubuntu Server K3s Dev
+  description: Helm charts and configuration for the self-hosted K3s platform.
+  annotations:
+    github.com/project-slug: kad-bloemgx/ubuntu-server-k3s-dev
+    backstage.io/source-location: url:https://github.com/kad-bloemgx/ubuntu-server-k3s-dev/tree/main
+spec:
+  type: infrastructure
+  lifecycle: production
+  system: ubuntu-server-platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: argo-cd
+  title: Argo CD
+  description: GitOps controller that deploys and reconciles applications from this repository.
+  annotations:
+    github.com/project-slug: kad-bloemgx/ubuntu-server-k3s-dev
+    backstage.io/source-location: url:https://github.com/kad-bloemgx/ubuntu-server-k3s-dev/tree/main/deploy/helm/argocd/argo-cd
+spec:
+  type: service
+  lifecycle: production
+  system: ubuntu-server-platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: backstage
+  title: Backstage
+  description: Developer portal and software catalog for the K3s platform.
+  annotations:
+    github.com/project-slug: kad-bloemgx/ubuntu-server-k3s-dev
+    backstage.io/source-location: url:https://github.com/kad-bloemgx/ubuntu-server-k3s-dev/tree/main/deploy/helm/argocd/backstage
+spec:
+  type: website
+  lifecycle: production
+  system: ubuntu-server-platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: headlamp
+  title: Headlamp
+  description: Web-based dashboard for managing the Kubernetes cluster.
+  annotations:
+    github.com/project-slug: kad-bloemgx/ubuntu-server-k3s-dev
+    backstage.io/source-location: url:https://github.com/kad-bloemgx/ubuntu-server-k3s-dev/tree/main/deploy/helm/argocd/headlamp
+spec:
+  type: website
+  lifecycle: production
+  system: ubuntu-server-platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: demo-app
+  title: Demo App
+  description: Example application used to verify GitOps deployments.
+  annotations:
+    github.com/project-slug: kad-bloemgx/ubuntu-server-k3s-dev
+    backstage.io/source-location: url:https://github.com/kad-bloemgx/ubuntu-server-k3s-dev/tree/main/deploy/helm/argocd/demo-app
+spec:
+  type: service
+  lifecycle: experimental
+  system: ubuntu-server-platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: storage
+  title: Cluster Storage
+  description: Kubernetes storage classes for persistent application data.
+  annotations:
+    github.com/project-slug: kad-bloemgx/ubuntu-server-k3s-dev
+    backstage.io/source-location: url:https://github.com/kad-bloemgx/ubuntu-server-k3s-dev/tree/main/deploy/helm/argocd/storage
+spec:
+  type: infrastructure
+  lifecycle: production
+  system: ubuntu-server-platform
