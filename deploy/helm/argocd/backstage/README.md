@@ -12,6 +12,20 @@ from the existing `backstage-postgresql` Secret.
 Argo CD discovers this chart under `deploy/helm/argocd/backstage` and deploys it
 in its own `backstage` namespace, in a dedicated RollingSync step.
 
+## Guest authentication
+
+The wrapper enables token-based guest sign-in with
+`auth.providers.guest.dangerouslyAllowOutsideDevelopment: true`. This allows
+anyone who can reach Backstage to sign in without credentials. Use it only in
+a restricted demo environment, not a publicly accessible production deployment.
+For production, remove this override and configure a real authentication
+provider.
+
+Publish the configuration change to `main` and let Argo CD sync the Backstage
+application and roll out the updated pod. Then sign out or open a private browser
+window and sign in as a guest again. Do not use the legacy guest-token fallback:
+it does not provide the backend credentials required by the permission API.
+
 ## Software catalog
 
 Backstage loads the catalog from the repository's root `catalog-info.yaml`

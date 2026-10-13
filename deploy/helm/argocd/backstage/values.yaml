@@ -11,10 +11,15 @@ backstage:
       - "/app/app-config.yaml"
 
     # Layer an extra app-config on top of the demo image's built-in config.
-    # Only the database section is overridden; guest auth and base URLs stay
-    # as provided by the demo image. The POSTGRES_* env vars are injected by
-    # the chart when postgresql.enabled is true.
+    # Enable guest auth for this demo deployment and configure its database
+    # and catalog. Base URLs stay as provided by the demo image. The chart
+    # injects POSTGRES_* env vars when postgresql.enabled is true.
     appConfig:
+      auth:
+        providers:
+          guest:
+            # Anonymous access: only use in a restricted demo environment.
+            dangerouslyAllowOutsideDevelopment: true
       backend:
         database:
           client: pg
