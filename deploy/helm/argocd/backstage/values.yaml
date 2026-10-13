@@ -40,7 +40,7 @@ backstage:
           - type: url
             target: https://raw.githubusercontent.com/kad-bloemgx/ubuntu-server-k3s-dev/main/catalog-info.yaml
             rules:
-              - allow: [System, Component, User, API]
+              - allow: [System, Component, User, API, Location]
 
   # Bundled Bitnami PostgreSQL subchart, providing persistent storage so the
   # catalog survives pod restarts. Credentials come from an existing Secret

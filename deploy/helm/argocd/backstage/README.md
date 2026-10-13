@@ -33,7 +33,9 @@ through a public GitHub URL. The catalog contains this repository, the
 `ubuntu-server-platform` system, and components for the Argo CD, Backstage,
 Headlamp, demo-app, and storage charts. A local-only
 [Java demo](../../../../examples/java-demo/README.md) and its OpenAPI API are
-also included for exploring Catalog Graph.
+also included for exploring Catalog Graph. A `Location` entity in the root file
+registers the demo's generated Maven library components; do not edit those
+generated files by hand.
 Gerard Bloemendaal is registered as a `User` and owns the system and components
 through `spec.owner: user:default/gerard-bloemendaal`. This catalog identity is
 separate from guest authentication; it does not create a login account.
@@ -43,7 +45,8 @@ To add or update an entry, edit `catalog-info.yaml` and commit the change to
 include a `backstage.io/source-location` annotation pointing to their source
 directory. Components require `spec.type`, `spec.lifecycle`, and `spec.owner`;
 systems also require `spec.owner`. The catalog location in this chart's
-`values.yaml` allows `System`, `Component`, `User`, and `API` entities.
+`values.yaml` allows `System`, `Component`, `User`, `API`, and `Location`
+entities.
 
 The backend's `reading.allow` permits raw GitHub reads only under
 `/kad-bloemgx/ubuntu-server-k3s-dev/main/`. Global `catalog.rules` also allow

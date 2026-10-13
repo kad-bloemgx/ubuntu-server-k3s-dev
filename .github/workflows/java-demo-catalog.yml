@@ -1,0 +1,38 @@
+name: java-demo-catalog
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - catalog-info.yaml
+      - examples/java-demo/**
+      - .github/workflows/java-demo-catalog.yml
+  pull_request:
+    paths:
+      - catalog-info.yaml
+      - examples/java-demo/**
+      - .github/workflows/java-demo-catalog.yml
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Test catalog generator
+        run: python3 -m unittest discover -s examples/java-demo/tools -v
+      - name: Check generated library catalog is current
+        run: python3 examples/java-demo/tools/generate_catalog.py --check
+      - name: Build and test Java demo
+        run: mvn -B -f examples/java-demo/pom.xml verify
